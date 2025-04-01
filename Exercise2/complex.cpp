@@ -4,7 +4,7 @@
 int main() {
     using cplx = ComplexNumber<float>;  // con i float
 	
-	cplx ex(2.2); //non chiama il converting constructor
+	cplx ex(2.2); 
 	
 	float a = 1.0;
 	float b = 5.0;

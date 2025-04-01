@@ -10,6 +10,7 @@ public:
     // Costruttore di default
     ComplexNumber() : real(0), imag(0) {}
 	
+	// explicit impedisce la conversione implicita da T a ComplexNumber<T>
 	explicit ComplexNumber(T a){
 		real = a;
         imag = 0;
