@@ -1,5 +1,4 @@
 #pragma once  //protegge l'header dalle doppie inclusioni
-
 #include <iostream>
 #include <cmath>
 
@@ -10,6 +9,12 @@ class ComplexNumber {
 public:
     // Costruttore di default
     ComplexNumber() : real(0), imag(0) {}
+	
+	explicit ComplexNumber(T a){
+		real = a;
+        imag = 0;
+        std::cout << "Il numero complesso " << a << " ha parte immaginaria nulla." << std::endl;
+    }
     
     // Costruttore con parametri definiti dall'utente
     ComplexNumber(T r, T i) : real(r), imag(i) {}
@@ -44,7 +49,7 @@ public:
         return result;
     }
     
-    // Operatore += tra ComplexNumber e T
+    // Operatore += tra ComplexNumber a sx e T a dx
     ComplexNumber& operator+=(const T& value) {
         real += value;
         return *this;
@@ -73,7 +78,7 @@ public:
         return result;
     }
     
-    // Operatore *= tra ComplexNumber e T
+    // Operatore *= tra ComplexNumber a sx e T a dx
     ComplexNumber& operator*=(const T& value) {
         real *= value;
         imag *= value;
@@ -91,18 +96,25 @@ public:
 // Overload dell'operatore per stampare
 template<typename T>
 std::ostream& operator<<(std::ostream& os, const ComplexNumber<T>& c) {
-	os << c.getReal();
-	if (c.getImag() >= 0)
-		os << "+(" << c.getImag() << ")i";
-	else
-		os << c.getImag() << "i";
-	return os;
+        if (c.getReal() == 0 && c.getImag() == 0){
+            os << "0";
+        }else if (c.getReal() == 0 && c.getImag() != 0){
+            os << c.getImag() << "i";
+        }else if (c.getReal() != 0 && c.getImag() == 0){
+            os << c.getReal();
+        }else if(c.getReal() != 0 && c.getImag() > 0){
+        os << c.getReal() << "+" << c.getImag() << "i";
+        }else if(c.getReal() != 0 && c.getImag() < 0){
+        os << c.getReal() << "-" << -c.getImag() << "i";   
+        }
+        return os;
 }
   
-// Operatori + e * tra un numero reale e ComplexNumber
+// Operatori + e * tra un numero reale a sx e ComplexNumber a dx
 template<typename T, typename U>
 ComplexNumber<U> operator+(const T& value, const ComplexNumber<U>& c) {
-    return ComplexNumber<U>(static_cast<U>(value) + c.getReal(), c.getImag());
+    return ComplexNumber<U>(static_cast<U>(value) + c.getReal(), c.getImag()); /* per evitare i conflitti di tipi
+	static_cast converte nel tipo usato per definire U*/
 }
 
 template<typename T, typename U>
